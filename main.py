@@ -115,7 +115,30 @@ class Phone(Field):
 
     @value.setter
     def value(self, new_value) -> None:
-        self.__value = new_value
+        phone_valid = True
+
+        for i in new_value:
+            if i < "0" or i > "9":
+                print("Phone not valid")
+                phone_valid = False
+                break
+
+        if phone_valid:
+            new_phone = (
+                new_value.strip()
+                .removeprefix("+")
+                .replace("(", "")
+                .replace(")", "")
+                .replace("-", "")
+                .replace(" ", "")
+            )
+
+            if len(new_phone) == 12:
+                format_phone = new_phone
+            else:
+                format_phone = "+38" + new_phone
+
+            self.__value = format_phone
 
 
 class Birthday(Field):
